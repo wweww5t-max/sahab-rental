@@ -103,12 +103,7 @@ class ContractController extends Controller
         //
     }
 
-  public function edit(Contract $contract)
-{
-    return view('contracts.edit', compact('contract'));
-}
-
-public function pdf(Contract $contract)
+  public function pdf(Contract $contract)
 {
     $contract->load(['customer', 'vehicle']);
 
