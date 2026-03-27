@@ -21,6 +21,13 @@ class ContractController extends Controller
         return view('contracts.edit', compact('contract'));
     }
 
+    public function update(Request $request, Contract $contract)
+    {
+        $contract->update($request->all());
+
+        return redirect()->route('contracts.index')->with('success', 'تم التعديل');
+    }
+
     public function create()
     {
         $customers = Customer::latest()->get();
