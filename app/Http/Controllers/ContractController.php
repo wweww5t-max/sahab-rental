@@ -16,6 +16,14 @@ class ContractController extends Controller
         return view('contracts.index', compact('contracts'));
     }
 
+    public function create()
+    {
+        $customers = Customer::latest()->get();
+        $vehicles = Vehicle::where('status', 'available')->latest()->get();
+
+        return view('contracts.create', compact('customers', 'vehicles'));
+    }
+
     public function edit(Contract $contract)
     {
         return view('contracts.edit', compact('contract'));
@@ -25,9 +33,21 @@ class ContractController extends Controller
     {
         $contract->update($request->all());
 
-        return redirect()->route('contracts.index')->with('success', 'تم التعديل');
+        return redirect()->route('contracts.index')
+            ->with('success', 'تم التعديل');
+    }
+}
+
+    public function create()
+    {
+        $customers = Customer::latest()->get();
+        $vehicles = Vehicle::where('status', 'available')->latest()->get();
+
+        return view('contracts.create', compact('customers', 'vehicles'));
     }
 
+    
+}
     public function create()
     {
         $customers = Customer::latest()->get();
