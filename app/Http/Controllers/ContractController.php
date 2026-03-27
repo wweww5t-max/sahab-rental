@@ -21,6 +21,7 @@ class ContractController extends Controller
         return view('contracts.edit', compact('contract'));
     }
 }
+
    public function create()
     {
         $customers = Customer::latest()->get();
