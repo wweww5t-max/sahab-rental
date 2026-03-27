@@ -17,7 +17,12 @@ class ContractController extends Controller
         return view('contracts.index', compact('contracts'));
     }
 
-    public function create()
+    public function edit(Contract $contract)
+{
+    return view('contracts.edit', compact('contract'));
+}
+
+   public function create()
     {
         $customers = Customer::latest()->get();
         $vehicles = Vehicle::where('status', 'available')->latest()->get();
