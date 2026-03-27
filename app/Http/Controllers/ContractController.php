@@ -37,3 +37,22 @@ class ContractController extends Controller
             ->with('success', 'تم التعديل');
     }
 }
+public function pdf(Contract $contract)
+{
+    $contract->load(['customer', 'vehicle']);
+
+    $html = '
+    <h1>عقد رقم: ' . $contract->contract_number . '</h1>
+    <p>العميل: ' . ($contract->customer->full_name ?? '-') . '</p>
+    <p>السيارة: ' . ($contract->vehicle->brand ?? '-') . '</p>
+    <p>الإجمالي: ' . $contract->total_amount . '</p>
+    ';
+
+    $mpdf = new \Mpdf\Mpdf();
+    $mpdf->WriteHTML($html);
+
+    return response(
+        $mpdf->Output('contract.pdf', 'I'),
+        200
+    )->header('Content-Type', 'application/pdf');
+}
