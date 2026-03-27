@@ -147,19 +147,19 @@
         <table class="contracts-table">
             <thead>
                 <tr>
-                    <th>رقم العقد</th>
-                    <th>العميل</th>
-                    <th>السيارة</th>
-                    <th>من</th>
-                    <th>إلى</th>
-                    <th>الإجمالي</th>
-                    <th>الحالة</th>
-                    <th>أنشأ بواسطة</th>
-                    <th>PDF</th>
-                    <th>إجراء</th>
-                </tr>
-            </thead>
-
+                    <thead>
+<tr>
+    <th>رقم العقد</th>
+    <th>العميل</th>
+    <th>السيارة</th>
+    <th>من</th>
+    <th>إلى</th>
+    <th>الإجمالي</th>
+    <th>الحالة</th>
+    <th>PDF</th>
+    <th>إجراء</th>
+</tr>
+</thead>
             <tbody>
                 @forelse($contracts as $contract)
                     <tr>
