@@ -35,9 +35,8 @@ Route::get('/', function () {
 Route::middleware(['auth'])->group(function () {
 
     Route::get('/dashboard', function () {
-        return 'Welcome sultan 🔥';
-
-    });
+    return view('dashboard');
+});
 
     Route::middleware(['role:manager|accountant'])->group(function () {
         Route::resource('contracts', ContractController::class);
