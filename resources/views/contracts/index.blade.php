@@ -141,7 +141,6 @@
 @endforeach
 </tbody>
 
-</table>
 </div>
 
     <div class="contracts-table-wrap">
