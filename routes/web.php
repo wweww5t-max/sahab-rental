@@ -34,9 +34,11 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
 
-    // المدير + المحاسب
-    Route::middleware(['role:manager|accountant'])->group(function () {
+    Route::get('/dashboard', function () {
+        return 'Welcome sultan 🔥';
+    });
 
+    Route::middleware(['role:manager|accountant'])->group(function () {
         Route::resource('contracts', ContractController::class);
         Route::resource('customers', CustomerController::class);
         Route::resource('vehicles', VehicleController::class);
@@ -45,11 +47,8 @@ Route::middleware(['auth'])->group(function () {
             ->name('contracts.pdf');
     });
 
-    // المدير فقط
     Route::middleware(['role:manager'])->group(function () {
-
         Route::patch('/contracts/{contract}/close', [ContractController::class, 'close'])
             ->name('contracts.close');
     });
-
 });
