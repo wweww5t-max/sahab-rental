@@ -12,16 +12,15 @@ class ContractController extends Controller
 {
     public function index()
     {
-        $contracts = Contract::with(['customer', 'vehicle', 'user'])->latest()->get();
-
+        $contracts = Contract::all();
         return view('contracts.index', compact('contracts'));
     }
 
     public function edit(Contract $contract)
-{
-    return view('contracts.edit', compact('contract'));
+    {
+        return view('contracts.edit', compact('contract'));
+    }
 }
-
    public function create()
     {
         $customers = Customer::latest()->get();
