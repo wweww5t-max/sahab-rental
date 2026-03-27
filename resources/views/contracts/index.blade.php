@@ -117,16 +117,32 @@
         }
     </style>
 
-    <div class="page-header">
-        <h1>قائمة العقود</h1>
-        <a href="{{ route('contracts.create') }}" class="create-btn">+ إنشاء عقد</a>
-    </div>
+    <div class="contracts-table-wrap">
+<table class="contracts-table">
 
-    @if(session('success'))
-        <div class="success-box">
-            {{ session('success') }}
-        </div>
-    @endif
+    <thead>
+        <tr>
+            <th>رقم العقد</th>
+            <th>إجراء</th>
+        </tr>
+    </thead>
+
+   <tbody>
+@foreach($contracts as $contract)
+<tr>
+    <td>{{ $contract->contract_number }}</td>
+
+    <td>
+        <a href="{{ route('contracts.edit', $contract) }}">
+            تعديل
+        </a>
+    </td>
+</tr>
+@endforeach
+</tbody>
+
+</table>
+</div>
 
     <div class="contracts-table-wrap">
         <table class="contracts-table">
