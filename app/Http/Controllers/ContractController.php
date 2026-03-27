@@ -16,10 +16,7 @@ class ContractController extends Controller
         return view('contracts.index', compact('contracts'));
     }
 
-    public function edit(Contract $contract)
-    {
-        return view('contracts.edit', compact('contract'));
-    }
+   
 
     public function create()
     {
