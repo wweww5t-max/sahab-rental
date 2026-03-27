@@ -376,10 +376,10 @@ public function pdf(Contract $contract)
     ';
 
     $mpdf = new \Mpdf\Mpdf();
-    $mpdf->WriteHTML($html);
+$mpdf->WriteHTML($html);
 
-    return response(
-        $mpdf->Output('contract-' . $contract->contract_number . '.pdf', 'I'),
-        200
-    )->header('Content-Type', 'application/pdf');
+return response(
+    $mpdf->Output('contract-' . $contract->contract_number . '.pdf', 'I'),
+    200
+)->header('Content-Type', 'application/pdf');
 }
