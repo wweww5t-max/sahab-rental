@@ -399,6 +399,6 @@ public function store(Request $request)
         'status' => 'rented',
     ]);
 
-    return redirect()->route('contracts.index')->with('success', 'تم إنشاء العقد ياوحش');
+    return redirect()->route('contracts.index')->with('success', 'تم إنشاء العقد بنجاح ياوحش');
 }
 }

@@ -36,17 +36,14 @@
             @endforeach
         </select>
 
-        <label>تاريخ البداية:</label>
+        <label>تاريخ بداية العقد:</label>
         <input type="date" name="start_date">
 
-        <label>تاريخ النهاية:</label>
+        <label>تاريخ نهاية العقد:</label>
         <input type="date" name="end_date">
 
-        <label>السعر اليومي:</label>
+        <label>السعر الشهري:</label>
         <input type="number" step="0.01" name="daily_rate">
-
-        <label>خصم:</label>
-        <input type="number" step="0.01" name="discount_amount">
 
         <label>الشروط:</label>
         <textarea name="terms"></textarea>
@@ -61,3 +58,28 @@
         <button type="submit">حفظ العقد</button>
     </form>
 @endsection
+
+<script>
+function calculateTotal() {
+    let start = document.getElementById('start_date').value;
+    let end = document.getElementById('end_date').value;
+    let price = document.getElementById('daily_rate').value;
+
+    if (start && end && price) {
+        let startDate = new Date(start);
+        let endDate = new Date(end);
+
+        let diffTime = endDate - startDate;
+        let days = diffTime / (1000 * 60 * 60 * 24) + 1;
+
+        if (days > 0) {
+            document.getElementById('total_amount').value = days * price;
+        }
+    }
+}
+
+// يشغل الحساب عند التغيير
+document.getElementById('start_date').addEventListener('change', calculateTotal);
+document.getElementById('end_date').addEventListener('change', calculateTotal);
+document.getElementById('daily_rate').addEventListener('input', calculateTotal);
+</script>
