@@ -373,4 +373,32 @@ return response(
     200
 )->header('Content-Type', 'application/pdf');
 }
+
+public function store(Request $request)
+{
+    $request->validate([
+        'customer_id' => 'required|exists:customers,id',
+        'vehicle_id' => 'required|exists:vehicles,id',
+        'start_date' => 'required|date',
+        'end_date' => 'required|date|after_or_equal:start_date',
+        'total_amount' => 'required|numeric|min:0',
+    ]);
+
+    $contract = Contract::create([
+        'contract_number' => 'CTR-' . str_pad((string) (Contract::count() + 1), 6, '0', STR_PAD_LEFT),
+        'customer_id' => $request->customer_id,
+        'vehicle_id' => $request->vehicle_id,
+        'start_date' => $request->start_date,
+        'end_date' => $request->end_date,
+        'total_amount' => $request->total_amount,
+        'status' => 'active',
+        'created_by' => auth()->id(),
+    ]);
+
+    Vehicle::where('id', $request->vehicle_id)->update([
+        'status' => 'rented',
+    ]);
+
+    return redirect()->route('contracts.index')->with('success', 'تم إنشاء العقد ياوحش');
+}
 }
