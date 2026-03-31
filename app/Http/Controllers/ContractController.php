@@ -354,17 +354,6 @@ class ContractController extends Controller
                 </tr>
             </table>
 
-            <table class="verify-table">
-                <tr>
-                    <td class="section">التحقق من العقد</td>
-                </tr>
-                <tr>
-                    <td class="verify-box">
-                        ' . $qrHtml . '
-                        <div class="small-note">يمكن استخدام رمز التحقق أو الرابط للوصول إلى العقد</div>
-                    </td>
-                </tr>
-            </table>
 
             <div class="footer">
                 تم إنشاء هذا العقد إلكترونياً بواسطة نظام مؤسسة سحاب لتأجير السيارات
