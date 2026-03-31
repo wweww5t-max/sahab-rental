@@ -35,9 +35,10 @@ class ContractController extends Controller
 
         return redirect()->route('contracts.index')
             ->with('success', 'تم التعديل');
-    }
+    
 }
-public function pdf(Contract $contract)
+   public function pdf(Contract $contract)
+
 {
     $contract->load(['customer', 'vehicle']);
 
@@ -382,3 +383,5 @@ return response(
     $mpdf->Output('contract-' . $contract->contract_number . '.pdf', 'I'),
     200
 )->header('Content-Type', 'application/pdf');
+}
+}
