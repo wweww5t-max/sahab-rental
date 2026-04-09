@@ -14,7 +14,7 @@ class Contract extends Model
     'start_date',
     'end_date',
     'rent_days',
-    'daily_rate',
+    'monthly_rate',
     'vat_amount',
     'total_amount',
     'terms',

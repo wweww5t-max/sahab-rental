@@ -3,7 +3,6 @@
 @section('title', 'إنشاء عقد جديد')
 
 @section('content')
-
 <h2>إنشاء عقد جديد</h2>
 
 @if ($errors->any())
@@ -23,7 +22,9 @@
     <select name="customer_id">
         <option value="">اختر العميل</option>
         @foreach($customers as $customer)
-            <option value="{{ $customer->id }}">{{ $customer->full_name }}</option>
+            <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
+                {{ $customer->full_name }}
+            </option>
         @endforeach
     </select>
 
@@ -31,60 +32,73 @@
     <select name="vehicle_id">
         <option value="">اختر السيارة</option>
         @foreach($vehicles as $vehicle)
-            <option value="{{ $vehicle->id }}">
+            <option value="{{ $vehicle->id }}" {{ old('vehicle_id') == $vehicle->id ? 'selected' : '' }}>
                 {{ $vehicle->brand }} - {{ $vehicle->model }} ({{ $vehicle->plate_number }})
             </option>
         @endforeach
     </select>
 
     <label>تاريخ بداية العقد:</label>
-    <input type="date" id="start_date" name="start_date">
+    <input type="date" id="start_date" name="start_date" value="{{ old('start_date') }}">
 
     <label>تاريخ نهاية العقد:</label>
-    <input type="date" id="end_date" name="end_date">
+    <input type="date" id="end_date" name="end_date" value="{{ old('end_date') }}">
 
     <label>السعر الشهري:</label>
-    <input type="number" step="0.01" id="daily_rate" name="daily_rate">
+    <input type="number" step="0.01" id="monthly_rate" name="monthly_rate" value="{{ old('monthly_rate') }}">
 
     <label>الإجمالي:</label>
-    <input type="number" id="total_amount" name="total_amount" readonly>
+    <input type="number" step="0.01" id="total_amount" name="total_amount" value="{{ old('total_amount') }}" readonly>
 
     <label>الشروط:</label>
-    <textarea name="terms"></textarea>
+    <textarea name="terms">{{ old('terms') }}</textarea>
 
     <label>الحالة:</label>
     <select name="status">
-        <option value="active">active</option>
-        <option value="closed">closed</option>
+        <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>active</option>
+        <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>closed</option>
     </select>
 
     <br><br>
     <button type="submit">حفظ العقد</button>
-
 </form>
 
-@endsection
-
 <script>
-function calculateTotal() {
-    let start = document.getElementById('start_date').value;
-    let end = document.getElementById('end_date').value;
-    let price = document.getElementById('daily_rate').value;
+document.addEventListener('DOMContentLoaded', function () {
+    const startInput = document.getElementById('start_date');
+    const endInput = document.getElementById('end_date');
+    const rateInput = document.getElementById('monthly_rate');
+    const totalInput = document.getElementById('total_amount');
 
-    if (start && end && price) {
-        let startDate = new Date(start);
-        let endDate = new Date(end);
+    function calculateTotal() {
+        const start = startInput.value;
+        const end = endInput.value;
+        const rate = parseFloat(rateInput.value || 0);
 
-        let days = (endDate - startDate) / (1000 * 60 * 60 * 24) + 1;
-
-        if (days > 0) {
-            let total = days * price;
-            document.getElementById('total_amount').value = total;
+        if (!start || !end || !rate) {
+            totalInput.value = '';
+            return;
         }
-    }
-}
 
-document.getElementById('start_date').addEventListener('change', calculateTotal);
-document.getElementById('end_date').addEventListener('change', calculateTotal);
-document.getElementById('daily_rate').addEventListener('input', calculateTotal);
+        const startDate = new Date(start);
+        const endDate = new Date(end);
+
+        let months =
+            (endDate.getFullYear() - startDate.getFullYear()) * 12 +
+            (endDate.getMonth() - startDate.getMonth()) + 1;
+
+        if (months <= 0) {
+            totalInput.value = '';
+            return;
+        }
+
+        totalInput.value = (months * rate).toFixed(2);
+    }
+
+    startInput.addEventListener('change', calculateTotal);
+    endInput.addEventListener('change', calculateTotal);
+    rateInput.addEventListener('input', calculateTotal);
+
+    calculateTotal();
+});
 </script>
