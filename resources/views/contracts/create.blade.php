@@ -15,6 +15,9 @@
     </div>
 @endif
 
+    </button>
+</form>
+
 <form action="{{ route('contracts.store') }}" method="POST">
     @csrf
 

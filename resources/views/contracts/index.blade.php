@@ -115,12 +115,20 @@
             <td>{{ number_format($contract->total_amount, 2) }}</td>
 
             <td>
-                @if($contract->status == 'active')
-                    <span class="status-active">ساري</span>
-                @else
-                    <span class="status-closed">منتهي</span>
-                @endif
-            </td>
+    @if($contract->status == 'active')
+        <span class="status-active">ساري</span>
+
+        <form action="{{ route('contracts.close', $contract->id) }}" method="POST" style="display:inline;">
+            @csrf
+            <button style="background:red;color:white;border:none;padding:5px 10px;margin-top:5px;">
+                إنهاء
+            </button>
+        </form>
+
+    @else
+        <span class="status-closed">منتهي</span>
+    @endif
+</td>
 
             <td>
                 <a href="{{ route('contracts.pdf', $contract) }}" class="btn btn-pdf">

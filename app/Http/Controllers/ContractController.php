@@ -28,6 +28,17 @@ class ContractController extends Controller
     {
         return view('contracts.edit', compact('contract'));
     }
+public function close($id)
+{
+    $contract = Contract::findOrFail($id);
+
+    $contract->update([
+        'status' => 'closed'
+    ]);
+
+    return redirect()->back()->with('success', 'تم إنهاء العقد');
+}
+
 
     public function update(Request $request, Contract $contract)
     {
@@ -407,5 +418,7 @@ $contract = Contract::create([
     ]);
 
     return redirect()->route('contracts.index')->with('success', 'تم إنشاء العقد بنجاح');
+
+
 }
 }

@@ -6,6 +6,7 @@
     <h1>قائمة العملاء</h1>
 
     <a href="{{ route('customers.create') }}" class="btn btn-primary">➕ إضافة عميل</a>
+    
 
     @if(session('success'))
         <div class="alert-success">{{ session('success') }}</div>
@@ -20,14 +21,20 @@
             <th>الجنسية</th>
         </tr>
 
-        @foreach($customers as $customer)
-            <tr>
-                <td>{{ $customer->full_name }}</td>
-                <td>{{ $customer->national_id }}</td>
-                <td>{{ $customer->mobile }}</td>
-                <td>{{ $customer->license_number }}</td>
-                <td>{{ $customer->nationality }}</td>
-            </tr>
-        @endforeach
+@foreach($customers as $customer)
+<tr>
+    <td>{{ $customer->full_name }}</td>
+    <td>{{ $customer->national_id }}</td>
+    <td>{{ $customer->mobile }}</td>
+
+    <td>
+        <a href="{{ route('customers.edit', $customer->id) }}" 
+           style="background:blue;color:white;padding:5px 10px;">
+           تعديل
+        </a>
+    </td>
+</tr>
+@endforeach
+
     </table>
 @endsection

@@ -31,6 +31,12 @@
                 <td>{{ $vehicle->color }}</td>
                 <td>{{ $vehicle->daily_rate }}</td>
                 <td>{{ $vehicle->status }}</td>
+<td>
+    <a href="{{ route('vehicles.edit', $vehicle->id) }}"
+       style="background:blue;color:white;padding:5px 10px;">
+        تعديل
+    </a>
+</td>
             </tr>
         @endforeach
     </table>
