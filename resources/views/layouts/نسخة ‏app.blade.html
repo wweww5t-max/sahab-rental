@@ -1,0 +1,40 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.4">
+  <style type="text/css">
+    body {background-color: #eff2f9}
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; color: #13171f; -webkit-text-stroke: #13171f}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 16.0px Arial; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 14.0px 'Geeza Pro'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    p.p5 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 13.0px Arial; color: #b3bfd1; -webkit-text-stroke: #b3bfd1}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 12.0px Arial; color: #ffffff; -webkit-text-stroke: #ffffff; min-height: 14.0px}
+    p.p7 {margin: 0.0px 0.0px 0.0px 0.0px; font: 15.0px Arial; color: #0000e9; -webkit-text-stroke: #ffffff}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Arial; color: #13171f; -webkit-text-stroke: #13171f; background-color: #ffffff}
+    span.s1 {font-kerning: none}
+    span.s2 {font: 16.0px 'Apple Color Emoji'; font-kerning: none}
+    span.s3 {font: 12.0px Arial; font-kerning: none}
+    span.s4 {font-kerning: none; background-color: #c40017}
+    span.s5 {font: 14.0px 'Helvetica Neue'; font-kerning: none; background-color: #c40017}
+    span.s6 {text-decoration: underline ; font-kerning: none; background-color: #0d0f16}
+    span.s7 {text-decoration: underline ; font-kerning: none}
+  </style>
+</head>
+<body>
+<p dir="rtl" class="p1"><span class="s1">@if(auth()-&gt;check())</span></p>
+<p dir="rtl" class="p2"><span class="s2">👤</span><span class="s1"><b> {{ auth()-&gt;user()-&gt;name }}</b><b></b></span></p>
+<p dir="rtl" class="p3"><span class="s3">@csrf </span><span class="s4">تسجيل</span><span class="s5"> </span><span class="s4">الخروج</span></p>
+<h1 dir="rtl" style="margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; font: 30.0px Arial; color: #ffffff; -webkit-text-stroke: #ffffff"><span class="s1"><b>شركة جياد لتأجير السيارات</b><b></b></span></h1>
+<p dir="rtl" class="p5"><span class="s1">نظام إدارة العقود والعملاء والسيارات</span></p>
+<p dir="rtl" class="p6"><span class="s1"></span><br></p>
+<p dir="rtl" class="p7"><span class="s6"><a href="file:///Users/pc/Desktop/sahab-rental/resources/views/layouts/%7B%7B%20route('contracts.index')%20%7D%7D">العقود<span class="s7"></span></a></span></p>
+<p dir="rtl" class="p7"><span class="s6"><a href="file:///Users/pc/Desktop/sahab-rental/resources/views/layouts/%7B%7B%20route('customers.index')%20%7D%7D">العملاء<span class="s7"></span></a></span></p>
+<p dir="rtl" class="p7"><span class="s6"><a href="file:///Users/pc/Desktop/sahab-rental/resources/views/layouts/%7B%7B%20route('vehicles.index')%20%7D%7D">السيارات<span class="s7"></span></a></span></p>
+<p dir="rtl" class="p1"><span class="s1">@endif</span></p>
+<p dir="rtl" class="p8"><span class="s1">@yield('content')</span></p>
+</body>
+</html>
