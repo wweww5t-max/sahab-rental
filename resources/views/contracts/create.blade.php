@@ -1,28 +1,31 @@
 @extends('layouts.app')
 
-@section('title', 'إنشاء عقد جديد')
-
 @section('content')
-<h2>إنشاء عقد جديد</h2>
 
-@if ($errors->any())
-    <div>
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li style="color:red">{{ $error }}</li>
-            @endforeach
-        </ul>
+<div class="page-card">
+    <div class="section-head">
+        <div>
+            <h2 class="page-title">إنشاء عقد جديد</h2>
+            <p class="page-subtitle">أدخل بيانات العقد ليتم احتساب الإجمالي الشهري تلقائياً</p>
+        </div>
     </div>
-@endif
 
-    </button>
-</form>
+    @if ($errors->any())
+        <div style="background:#fee2e2;color:#991b1b;border:1px solid #fecaca;border-radius:14px;padding:14px 16px;margin-bottom:18px;font-weight:bold;">
+            <ul style="margin:0;padding-right:18px;">
+                @foreach ($errors->all() as $error)
+                    <li style="margin-bottom:6px;">{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 
-<form action="{{ route('contracts.store') }}" method="POST">
-    @csrf
+    <form action="{{ route('contracts.store') }}" method="POST">
+        @csrf
 
-    <label>العميل:</label>
-    <select name="customer_id">
+        <div class="form-group">
+    <label for="customer_id">العميل</label>
+    <select name="customer_id" id="customer_id" required>
         <option value="">اختر العميل</option>
         @foreach($customers as $customer)
             <option value="{{ $customer->id }}" {{ old('customer_id') == $customer->id ? 'selected' : '' }}>
@@ -30,78 +33,86 @@
             </option>
         @endforeach
     </select>
+</div>
+            <div>
+                <label>السيارة</label>
+                <select name="vehicle_id">
+                    <option value="">اختر السيارة</option>
+                    @foreach($vehicles as $vehicle)
+                        <option value="{{ $vehicle->id }}" {{ old('vehicle_id') == $vehicle->id ? 'selected' : '' }}>
+                            {{ $vehicle->brand }} - {{ $vehicle->model }} ({{ $vehicle->plate_number }})
+                        </option>
+                    @endforeach
+                </select>
+            </div>
 
-    <label>السيارة:</label>
-    <select name="vehicle_id">
-        <option value="">اختر السيارة</option>
-        @foreach($vehicles as $vehicle)
-            <option value="{{ $vehicle->id }}" {{ old('vehicle_id') == $vehicle->id ? 'selected' : '' }}>
-                {{ $vehicle->brand }} - {{ $vehicle->model }} ({{ $vehicle->plate_number }})
-            </option>
-        @endforeach
-    </select>
+            <div>
+                <label>تاريخ بداية العقد</label>
+                <input type="date" id="start_date" name="start_date" value="{{ old('start_date') }}">
+            </div>
 
-    <label>تاريخ بداية العقد:</label>
-    <input type="date" id="start_date" name="start_date" value="{{ old('start_date') }}">
+            <div>
+                <label>تاريخ نهاية العقد</label>
+                <input type="date" id="end_date" name="end_date" value="{{ old('end_date') }}">
+            </div>
 
-    <label>تاريخ نهاية العقد:</label>
-    <input type="date" id="end_date" name="end_date" value="{{ old('end_date') }}">
+            <div>
+                <label>السعر الشهري</label>
+                <input type="number" step="0.01" id="monthly_rate" name="monthly_rate" value="{{ old('monthly_rate') }}">
+            </div>
 
-    <label>السعر الشهري:</label>
-    <input type="number" step="0.01" id="monthly_rate" name="monthly_rate" value="{{ old('monthly_rate') }}">
+            <div>
+                <label>الإجمالي</label>
+                <input type="number" step="0.01" id="total_amount" name="total_amount" value="{{ old('total_amount') }}" readonly>
+            </div>
 
-    <label>الإجمالي:</label>
-    <input type="number" step="0.01" id="total_amount" name="total_amount" value="{{ old('total_amount') }}" readonly>
+            <div class="full-width">
+                <label>الشروط</label>
+                <textarea name="terms" rows="4">{{ old('terms') }}</textarea>
+            </div>
 
-    <label>الشروط:</label>
-    <textarea name="terms">{{ old('terms') }}</textarea>
+            <div>
+                <label>الحالة</label>
+                <select name="status">
+                    <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>ساري</option>
+                    <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>منتهي</option>
+                </select>
+            </div>
+        </div>
 
-    <label>الحالة:</label>
-    <select name="status">
-        <option value="active" {{ old('status', 'active') == 'active' ? 'selected' : '' }}>active</option>
-        <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>closed</option>
-    </select>
-
-    <br><br>
-    <button type="submit">حفظ العقد</button>
-</form>
+        <div style="margin-top:20px;">
+            <button type="submit" class="btn btn-success">حفظ العقد</button>
+        </div>
+    </form>
+</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    const startInput = document.getElementById('start_date');
-    const endInput = document.getElementById('end_date');
-    const rateInput = document.getElementById('monthly_rate');
-    const totalInput = document.getElementById('total_amount');
+    const startDate = document.getElementById('start_date');
+    const endDate = document.getElementById('end_date');
+    const monthlyRate = document.getElementById('monthly_rate');
+    const totalAmount = document.getElementById('total_amount');
 
     function calculateTotal() {
-        const start = startInput.value;
-        const end = endInput.value;
-        const rate = parseFloat(rateInput.value || 0);
-
-        if (!start || !end || !rate) {
-            totalInput.value = '';
+        if (!startDate.value || !endDate.value || !monthlyRate.value) {
+            totalAmount.value = '';
             return;
         }
 
-        const startDate = new Date(start);
-        const endDate = new Date(end);
+        const start = new Date(startDate.value);
+        const end = new Date(endDate.value);
 
-        let months =
-            (endDate.getFullYear() - startDate.getFullYear()) * 12 +
-            (endDate.getMonth() - startDate.getMonth()) + 1;
+        let months = (end.getFullYear() - start.getFullYear()) * 12;
+        months += (end.getMonth() - start.getMonth()) + 1;
 
-        if (months <= 0) {
-            totalInput.value = '';
-            return;
-        }
+        if (months < 1) months = 1;
 
-        totalInput.value = (months * rate).toFixed(2);
+        totalAmount.value = (months * parseFloat(monthlyRate.value || 0)).toFixed(2);
     }
 
-    startInput.addEventListener('change', calculateTotal);
-    endInput.addEventListener('change', calculateTotal);
-    rateInput.addEventListener('input', calculateTotal);
-
-    calculateTotal();
+    startDate.addEventListener('change', calculateTotal);
+    endDate.addEventListener('change', calculateTotal);
+    monthlyRate.addEventListener('input', calculateTotal);
 });
 </script>
+@endsection

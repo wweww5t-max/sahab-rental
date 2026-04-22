@@ -1,0 +1,146 @@
+@extends('layouts.app')
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>شركة جياد لتأجير السيارات</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Tahoma, sans-serif;
+            background: #f5f7fb;
+        }
+
+        /* الهيدر */
+        .hero {
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: 32px;
+        }
+
+        .hero p {
+            margin-top: 8px;
+            opacity: 0.9;
+        }
+
+        /* المنيو */
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .nav a {
+            padding: 10px 25px;
+            border-radius: 10px;
+            text-decoration: none;
+            background: white;
+            color: #333;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav a:hover {
+            background: #3b82f6;
+            color: white;
+        }
+
+        /* المحتوى */
+        .container {
+            width: 100%;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        /* الإحصائيات */
+        .stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-box {
+            flex: 1;
+            padding: 20px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .available { background: #22c55e; }
+        .rented { background: #3b82f6; }
+        .maintenance { background: #f59e0b; }
+
+        /* الأزرار */
+        .btn-add {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- الهيدر -->
+    <div class="hero">
+        <h1>شركة جياد لتأجير السيارات</h1>
+        <p>نظام احترافي متكامل لإدارة العقود والعملاء والسيارات</p>
+
+        <div class="nav">
+            <a href="{{ route('vehicles.index') }}">السيارات</a>
+            <a href="{{ route('customers.index') }}">العملاء</a>
+            <a href="{{ route('contracts.index') }}">العقود</a>
+        </div>
+    </div>
+
+    <!-- المحتوى -->
+    <div class="container">
+        <div class="card">
+
+            <!-- الإحصائيات -->
+            @isset($available)
+            <div class="stats">
+                <div class="stat-box available">
+                    السيارات المتاحة<br>{{ $available }}
+                </div>
+                <div class="stat-box rented">
+                    السيارات المؤجرة<br>{{ $rented }}
+                </div>
+                <div class="stat-box maintenance">
+                    في الصيانة<br>{{ $maintenance }}
+                </div>
+            </div>
+            @endisset
+
+            <!-- زر -->
+            <div style="margin-bottom:15px;">
+                <a href="{{ route('vehicles.create') }}" class="btn-add">+ إضافة سيارة</a>
+            </div>
+
+            <!-- محتوى الصفحات -->
+            @yield('content')
+
+        </div>
+    </div>
+
+</body>
+</html>

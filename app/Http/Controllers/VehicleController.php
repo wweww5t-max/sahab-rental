@@ -9,12 +9,20 @@ class VehicleController extends Controller
 {
     // عرض السيارات
     public function index()
-    {
-        $vehicles = Vehicle::latest()->get();
-        return view('vehicles.index', compact('vehicles'));
-    }
+{
+    $vehicles = Vehicle::all();
 
-    // صفحة إضافة سيارة
+    $available = Vehicle::where('status', 'available')->count();
+    $rented = Vehicle::where('status', 'rented')->count();
+    $maintenance = Vehicle::where('status', 'maintenance')->count();
+
+    return view('vehicles.index', compact(
+        'vehicles',
+        'available',
+        'rented',
+        'maintenance'
+    ));
+}
     public function create()
     {
         return view('vehicles.create');

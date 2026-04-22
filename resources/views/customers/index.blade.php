@@ -1,65 +1,71 @@
 @extends('layouts.app')
 
-@section('title', 'العملاء')
-
 @section('content')
 
-<h2>قائمة العملاء</h2>
+<div class="stats-grid">
+    <div class="stat-card">
+        
 
-@if(session('success'))
-    <div style="color:green;">
-        {{ session('success') }}
+<div class="page-card">
+    <div class="section-head">
+        <div>
+            <h2 class="page-title">قائمة العملاء</h2>
+            <p class="page-subtitle"ي</p>
+        </div>
+
+        <a href="{{ route('customers.create') }}" class="btn btn-primary">+ إضافة عميل جديد</a>
     </div>
-@endif
 
-<a href="{{ route('customers.create') }}" 
-   style="background:green;color:white;padding:5px 10px;">
-    إضافة عميل
-</a>
+    @if(session('success'))
+        <div class="alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
 
-<br><br>
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>رقم الهوية</th>
+                    <th>الجوال</th>
+                    <th>رقم الرخصة</th>
+                    <th>الجنسية</th>
+                    <th>الإجراء</th>
+                </tr>
+            </thead>
 
-<table border="1" cellpadding="10" cellspacing="0">
-    <thead>
-        <tr>
-            <th>الاسم</th>
-            <th>رقم الهوية</th>
-            <th>الجوال</th>
-            <th>الإجراء</th>
-        </tr>
-    </thead>
+            <tbody>
+                @forelse($customers as $customer)
+                <tr>
+                    <td>{{ $customer->full_name }}</td>
+                    <td>{{ $customer->national_id ?? '-' }}</td>
+                    <td>{{ $customer->mobile ?? '-' }}</td>
+                    <td>{{ $customer->license_number ?? '-' }}</td>
+                    <td>{{ $customer->nationality ?? '-' }}</td>
 
-    <tbody>
-        @foreach($customers as $customer)
-        <tr>
-            <td>{{ $customer->full_name }}</td>
-            <td>{{ $customer->national_id }}</td>
-            <td>{{ $customer->mobile }}</td>
+                    <td>
+                        <div class="actions">
+                            <a href="{{ route('customers.edit', $customer->id) }}" class="btn btn-warning">تعديل</a>
 
-            <td>
-                <!-- تعديل -->
-                <a href="{{ route('customers.edit', $customer->id) }}"
-                   style="background:blue;color:white;padding:5px 10px;margin-right:5px;">
-                    تعديل
-                </a>
-
-                <!-- حذف -->
-                <form action="{{ route('customers.destroy', $customer->id) }}"
-                      method="POST"
-                      style="display:inline;">
-                    @csrf
-                    @method('DELETE')
-
-                    <button type="submit"
-                            onclick="return confirm('⚠️ هل أنت متأكد من حذف العميل؟')"
-                            style="background:red;color:white;padding:5px 10px;border:none;">
-                        حذف
-                    </button>
-                </form>
-            </td>
-        </tr>
-        @endforeach
-    </tbody>
-</table>
+                            <form action="{{ route('customers.destroy', $customer->id) }}" method="POST" onsubmit="return confirm('هل أنت متأكد من حذف العميل؟');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">حذف</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                @empty
+                <tr>
+                    <td colspan="6" style="padding: 30px; color: #64748b; font-weight: bold;">
+                        لا يوجد عملاء حالياً
+                    </td>
+                </tr>
+                @endforelse
+            </tbody>
+        </table>
+    </div>
+</div>
 
 @endsection
